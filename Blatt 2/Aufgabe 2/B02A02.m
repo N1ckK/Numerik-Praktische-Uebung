@@ -170,7 +170,7 @@ function plot_spline(x_grid, coefficients)
     current_plot = plot(x,y, "b");
     n = length(x_grid);
     y = zeros(n,1);
-    for i=1:n
+    for i=1:n 
         y(i) = g(x_grid(i));
     end
     current_plot_2 = plot(x_grid, y, "ob");
