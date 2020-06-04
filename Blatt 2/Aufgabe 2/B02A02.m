@@ -22,7 +22,7 @@ function call_calc(calc, grid_points)
     else 
         disp("exponential-distant grid points x_i = (i/n)^4:");
     end
-    for k=1:2
+    for k=0:2
         n = 2^k;
         x = grid_points(n);
         calc(x);
@@ -65,11 +65,11 @@ end
 function cubic_spline_interpolation(x)
     n = length(x)-1;
     fprintf("n = %d\n", n);
-    y = f(x);
+    y = g(x);
     % a_1, ..., a_n, b_1, ..., b_n, c_1, ..., c_n, d_1, ..., d_n
     A = zeros(4*n);
-    b = zeros(4*n, 0);
-    % grid points
+    b = zeros(4*n, 1);
+    % grid points left
     for i=1:n
         A(i, (i-1)*4+1) = x(i)^3;
         A(i, (i-1)*4+2) = x(i)^2;
@@ -77,23 +77,53 @@ function cubic_spline_interpolation(x)
         A(i, (i-1)*4+4) = 1;
 
         b(i) = y(i);
+        disp(i);
+    end
+    % grid points right
+    for i=1:n
+        A(i+n, (i-1)*4+1) = x(i+1)^3;
+        A(i+n, (i-1)*4+2) = x(i+1)^2;
+        A(i+n, (i-1)*4+3) = x(i+1);
+        A(i+n, (i-1)*4+4) = 1;
+
+        b(i+n) = y(i+1);
+        disp(i+n);
     end
     % first derivatives
     for i=1:n-1
-        A(i+n, (i-1)*4+1) = 3*x(i)^2 - 3*x(i+1)^2;
-        A(i+n, (i-1)*4+2) = 2*x(i) - 2*x(i+1);
-        A(i+n, (i-1)*4+3) = 1 - 1;
+        A(i+2*n, (i-1)*4+1) = 3*x(i+1)^2;
+        A(i+2*n, (i-1)*4+2) = 2*x(i+1);
+        A(i+2*n, (i-1)*4+3) = 1;
 
-        b(i+n) = 0;
+        A(i+2*n, (i-1)*4+5) = - 3*x(i+1)^2;
+        A(i+2*n, (i-1)*4+6) = - 2*x(i+1);
+        A(i+2*n, (i-1)*4+7) = - 1;
+
+        b(i+2*n) = 0;
+        disp(i+2*n);
     end
     % second derivatives
     for i=1:n-1
-        A(i+2*n-1, (i-1)*4+1) = 6*x(i) - 6*x(i+1);
-        A(i+2*n-1, (i-1)*4+2) = 2 - 2;
+        A(i+3*n-1, (i-1)*4+1) = 6*x(i+1);
+        A(i+3*n-1, (i-1)*4+2) = 2;
 
-        b(i+2*n) = 0;    
+        A(i+3*n-1, (i-1)*4+5) = - 6*x(i+1);
+        A(i+3*n-1, (i-1)*4+6) = - 2;
+
+        b(i+3*n-1) = 0;    
+        disp(i+3*n-1);
     end
+    % natural Randbedingungen
+    A(4*n-1, 1) = 6*x(1);
+    A(4*n-1, 2) = 2;
+    b(4*n-1) = 0;
+    A(4*n, 1) = 6*x(n+1);
+    A(4*n, 2) = 2;
+    b(4*n) = 0;
 
     disp(A);
     disp(b);
+
+    coefficients = A\b;
+
 end
