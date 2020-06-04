@@ -1,5 +1,5 @@
 function B02A02()
-    % part1(); 
+    part1(); 
     part2(); 
 end
 
@@ -12,6 +12,11 @@ function part1()
 end    
 
 function part2()
+    disp(" ");
+    disp(" ");
+    disp("Part 2: Approximation of sqrt(x) with a linear spline");
+    disp("Please press enter to view the next step...");
+    disp(" ");
     call_calc(@cubic_spline_interpolation_of_g, @eqidistant);
     call_calc(@cubic_spline_interpolation_of_g, @quartic);
 end
@@ -21,9 +26,10 @@ function call_calc(calc, grid_points)
     if (isequal(grid_points, @eqidistant))
         disp("equidistant grid points:");
     else 
-        disp("quartic-distant grid points x_i = (i/n)^4:");
+        disp(" ");
+        disp("quartic-distant grid points:");
     end
-    for k=0:5
+    for k=1:4
         n = 2^k;
         x = grid_points(n);
         calc(x);
@@ -57,15 +63,21 @@ end
 
 function plot_linear_approximation_of_f(x)
     n = length(x);
-    fprintf("n = %d\n", n-1);
+    fprintf("\tn = %d\n", n-1);
     y = f(x);
     plot(x, y);
-    pause
+    pause;
 end
 
 function cubic_spline_interpolation_of_g(x)
+    [A, b] = calc_conditions(x);
+    coefficients = linsolve(A,b);
+    plot_spline(x, coefficients);
+end
+
+function [A,b] = calc_conditions(x)
     n = length(x)-1;
-    fprintf("n = %d\n", n);
+    fprintf("\tn = %d\n", n);
     y = g(x);
     % a_1, ..., a_n, b_1, ..., b_n, c_1, ..., c_n, d_1, ..., d_n
     A = zeros(4*n);
@@ -78,7 +90,6 @@ function cubic_spline_interpolation_of_g(x)
         A(i, (i-1)*4+4) = 1;
 
         b(i) = y(i);
-        disp(i);
     end
     % grid points right
     for i=1:n
@@ -88,7 +99,6 @@ function cubic_spline_interpolation_of_g(x)
         A(i+n, (i-1)*4+4) = 1;
 
         b(i+n) = y(i+1);
-        disp(i+n);
     end
     % first derivatives
     for i=1:n-1
@@ -101,7 +111,6 @@ function cubic_spline_interpolation_of_g(x)
         A(i+2*n, (i-1)*4+7) = - 1;
 
         b(i+2*n) = 0;
-        disp(i+2*n);
     end
     % second derivatives
     for i=1:n-1
@@ -112,7 +121,6 @@ function cubic_spline_interpolation_of_g(x)
         A(i+3*n-1, (i-1)*4+6) = - 2;
 
         b(i+3*n-1) = 0;    
-        disp(i+3*n-1);
     end
     % natural Randbedingungen
     A(4*n-1, 1) = 6*x(1);
@@ -121,14 +129,8 @@ function cubic_spline_interpolation_of_g(x)
     A(4*n, 4*(n-1)+1) = 6*x(n+1);
     A(4*n, 4*(n-1)+2) = 2;
     b(4*n) = 0;
-
-    disp(A);
-    disp(b);
-
-    coefficients = A\b
-    plot_spline(x, coefficients);
-
 end
+
 
 function plot_spline(x_grid, coefficients)
     n = 100;
