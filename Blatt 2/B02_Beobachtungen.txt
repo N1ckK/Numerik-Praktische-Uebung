@@ -1,0 +1,17 @@
+Numerik II Praktikum - Blatt 02
+===============================
+
+Aufgabe 01 (Projekt 04):
+-----------------------
+
+
+
+Aufgabe 02 (Projekt 05):
+-----------------------
+Teil 1:
+Bei der stückweise linearen Interpolation der Wurzelfunktion liefern die Stützstellen mit quartischem Abstand (also x_i = (i/n)^4), signifikant bessere Ergebnisse als äquidistante Stützstellen. Die Unterschied sind vor allem im Bereich nahe 0 sichtbar. Da sich die Steigung der Wurzelfunktion hier am stärksten verändert, erhöht sich die Approximationsgüte der Interpolation deutlich, wenn in diesem Bereich mehr Stützstellen verwendet werden. Daran sieht man, dass die Wahl der Stützstellen an die zu interpolierende Funktion angepasst werden sollte.
+
+Teil 2:
+Bei der kubischen Spline-Interpolation der Sinusfunktion (gestaucht auf [0,1]) zeigt sich dagegen ein anderes Bild. Aufgrund der Symmetrie der Sinusfunktion sind Stützstellen, die einen Häufungspunkt an genau einer Stelle besitzen nicht geeignet. Denn dadurch wird die Sinusfunktion in diesem Fall nahe der 0 besser approximiert als nahe der 1. 
+Bei Verwendung äquidistanter Stützstellen hingegen ist die Approximation sehr gut. Bereits bei n=8 sind optisch keine Fehler mehr erkennbar.
+Unter Umständen könnte man die Stützstellen entsprechend der Ableitung des Sinus verteilen, das heißt eine höhere Konzentration der Stützstellen um die Extremstellen herum wählen. Möglicherweise würde diese Herangehensweise noch bessere Ergebnisse liefern.
