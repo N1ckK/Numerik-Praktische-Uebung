@@ -4,6 +4,12 @@ Numerik II Praktikum - Blatt 02
 Aufgabe 01 (Projekt 04):
 -----------------------
 
+Der Sinus lässt sich bereits mit äquidistanten Stützstellen recht genau interpolieren.
+Die Methode der dividierten Differenzen eignet sich hervorragend dazu eine Funktion zu Interpolieren, welche man später an vielen verschiedenen Stellen auswerten möchte (anders als beim Neville-Schema). 
+Sobald man nämlich die Koeffizienten bestimmt hat, lässt sich das Polynom mit einem Aufwand von O(3n) an einer beliebigen Stelle auswerten, während
+das Auswerten eines Polynoms dargestellt in der Monombasis einen Aufwand von O(n(n+1)/2) besitzt. Dieser Effizienzvorteil kommt durch das nicht vorhandensein von Potenzen in der Darstellung zustande.
+Ein Nachteil dieser Dartstellung des Polynoms könnte jedeoch sein, dass Auslöschung potentiell einen sehr großen Fehler verursachen könnte, da im Falle der Auslöschung eines Faktors (x - x_i) alle weiteren Beiträge
+lambda_j + (x - x_j) für j > i ignoriert werden. Ein weiterer Nachteil der sich aus der Darstellung ergibt ist, dass man die Auswertung nicht parallelisieren kann (anders als bei der Darstellung bezüglich der Monombasis).
 
 
 Aufgabe 02 (Projekt 05):

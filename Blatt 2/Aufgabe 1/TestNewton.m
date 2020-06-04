@@ -33,7 +33,8 @@ for k=[1, 2, 3]
         % calculate the paritition and select desired parition
         if use_cheby == 0
             % tscheby
-            partition = arrayfun((@(i) -1 + 2 * i / n), 0:n); 
+            %partition = arrayfun((@(i) -1 + 2 * i / n), 0:n); 
+            partition = linspace(-1, 1, n + 1);
         elseif use_cheby == 1
             % equidistant
             partition = arrayfun((@(i) cos( (2*i + 1) / (2 * (n+1)) * pi)), 0:n);
@@ -41,7 +42,7 @@ for k=[1, 2, 3]
         
         % calculate coefficients for interpolated polynom in newton base
         lambdas = InterpolateNewton(partition, arrayfun(u, partition), n);
-
+        
         % list where values of the interpolated polynom at z_j will be
         % stored
         values = [];

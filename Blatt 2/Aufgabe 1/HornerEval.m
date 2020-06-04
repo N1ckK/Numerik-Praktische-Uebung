@@ -7,6 +7,6 @@ function value = HornerEval(lambdas, x_i, x)
 
 value = lambdas(end);
 
-for i=length(lambdas):-1:1
+for i=length(lambdas)-1:-1:1
     value = lambdas(i) + (x - x_i(i)) * value; 
 end
