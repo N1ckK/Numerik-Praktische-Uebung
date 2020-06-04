@@ -13,6 +13,8 @@ end
 
 function part2()
     call_calc(@cubic_spline_interpolation, @eqidistant);
+    call_calc(@cubic_spline_interpolation, @exponential);
+     
 end
 
 
@@ -22,7 +24,7 @@ function call_calc(calc, grid_points)
     else 
         disp("exponential-distant grid points x_i = (i/n)^4:");
     end
-    for k=0:2
+    for k=0:5
         n = 2^k;
         x = grid_points(n);
         calc(x);
@@ -125,5 +127,31 @@ function cubic_spline_interpolation(x)
     disp(b);
 
     coefficients = A\b;
+    plot_spline(x, coefficients);
 
+end
+
+function plot_spline(x_grid, coefficients)
+    n = 100;
+    x = linspace(0,1,n);
+    y = zeros(n,1);
+    for i=1:n
+        y(i) = evaluate_spline(x_grid, coefficients, x(i));
+    end
+    plot(x,y);
+    pause;
+end    
+function y = evaluate_spline(x_grid, coefficients, x)
+    n = length(x_grid)-1;
+    for i=1:n
+        if (x >= x_grid(i) && x <= x_grid(i+1))
+            a = coefficients(4*(i-1)+1);
+            b = coefficients(4*(i-1)+2);
+            c = coefficients(4*(i-1)+3);
+            d = coefficients(4*(i-1)+4);
+            
+            y = a*x^3+b*x^2+c*x+d;
+            return;
+        end
+    end    
 end
