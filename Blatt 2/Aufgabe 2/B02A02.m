@@ -7,8 +7,10 @@ function part1()
     disp("Part 1: Approximation of sqrt(x) with a linear spline");
     disp("Please press enter to view the next step...");
     disp(" ");
+    plot_f();
     call_calc(@plot_linear_approximation_of_f, @eqidistant);
     call_calc(@plot_linear_approximation_of_f, @quartic);
+    hold off;
 end    
 
 function part2()
@@ -17,8 +19,10 @@ function part2()
     disp("Part 2: Approximation of sqrt(x) with a linear spline");
     disp("Please press enter to view the next step...");
     disp(" ");
+    plot_g();
     call_calc(@cubic_spline_interpolation_of_g, @eqidistant);
     call_calc(@cubic_spline_interpolation_of_g, @quartic);
+    hold off;
 end
 
 
@@ -61,12 +65,36 @@ function y = g(x)
     y = sin(2*pi*x);
 end
 
+function plot_f()
+    n = 1000;
+    x = linspace(0,1, n);
+    y = zeros(n,1);
+    for i=1:n
+        y(i) = f(x(i));
+    end
+    plot(x,y, "r");
+    hold on;
+end
+
+function plot_g()
+    n = 1000;
+    x = linspace(0,1, n);
+    y = zeros(n,1);
+    for i=1:n
+        y(i) = g(x(i));
+    end
+    plot(x,y, "r");
+    hold on;
+end
+
 function plot_linear_approximation_of_f(x)
     n = length(x);
     fprintf("\tn = %d\n", n-1);
     y = f(x);
-    plot(x, y);
+    current_plot = plot(x,y, "-ob");
+    legend("sqrt(x)", "linear spline, n = " + int2str(n-1));
     pause;
+    delete(current_plot);
 end
 
 function cubic_spline_interpolation_of_g(x)
@@ -139,8 +167,17 @@ function plot_spline(x_grid, coefficients)
     for i=1:n
         y(i) = evaluate_spline(x_grid, coefficients, x(i));
     end
-    plot(x,y);
+    current_plot = plot(x,y, "b");
+    n = length(x_grid);
+    y = zeros(n,1);
+    for i=1:n
+        y(i) = g(x_grid(i));
+    end
+    current_plot_2 = plot(x_grid, y, "ob");
+    legend("sin(2*pi*x)", "cubic spline, n = " + int2str(length(x_grid)-1), "grid points");
     pause;
+    delete(current_plot);
+    delete(current_plot_2);
 end    
 
 function y = evaluate_spline(x_grid, coefficients, x)
