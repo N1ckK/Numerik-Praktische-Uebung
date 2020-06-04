@@ -118,14 +118,14 @@ function cubic_spline_interpolation_of_g(x)
     A(4*n-1, 1) = 6*x(1);
     A(4*n-1, 2) = 2;
     b(4*n-1) = 0;
-    A(4*n, 1) = 6*x(n+1);
-    A(4*n, 2) = 2;
+    A(4*n, 4*(n-1)+1) = 6*x(n+1);
+    A(4*n, 4*(n-1)+2) = 2;
     b(4*n) = 0;
 
     disp(A);
     disp(b);
 
-    coefficients = A\b;
+    coefficients = A\b
     plot_spline(x, coefficients);
 
 end
@@ -140,6 +140,7 @@ function plot_spline(x_grid, coefficients)
     plot(x,y);
     pause;
 end    
+
 function y = evaluate_spline(x_grid, coefficients, x)
     n = length(x_grid)-1;
     for i=1:n
