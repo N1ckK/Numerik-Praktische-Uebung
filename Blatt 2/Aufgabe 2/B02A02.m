@@ -8,13 +8,12 @@ function part1()
     disp("Please press enter to view the next step...");
     disp(" ");
     call_calc(@plot_linear_approximation_of_f, @eqidistant);
-    call_calc(@plot_linear_approximation_of_f, @exponential);
+    call_calc(@plot_linear_approximation_of_f, @quartic);
 end    
 
 function part2()
-    call_calc(@cubic_spline_interpolation, @eqidistant);
-    call_calc(@cubic_spline_interpolation, @exponential);
-     
+    call_calc(@cubic_spline_interpolation_of_g, @eqidistant);
+    call_calc(@cubic_spline_interpolation_of_g, @quartic);
 end
 
 
@@ -22,7 +21,7 @@ function call_calc(calc, grid_points)
     if (isequal(grid_points, @eqidistant))
         disp("equidistant grid points:");
     else 
-        disp("exponential-distant grid points x_i = (i/n)^4:");
+        disp("quartic-distant grid points x_i = (i/n)^4:");
     end
     for k=0:5
         n = 2^k;
@@ -38,7 +37,7 @@ function x = eqidistant(n)
     end 
 end    
 
-function x = exponential(n)
+function x = quartic(n)
     x = zeros(n+1,0);
     for i=0:n
         x(i+1) = (i/n)^4;
@@ -64,7 +63,7 @@ function plot_linear_approximation_of_f(x)
     pause
 end
 
-function cubic_spline_interpolation(x)
+function cubic_spline_interpolation_of_g(x)
     n = length(x)-1;
     fprintf("n = %d\n", n);
     y = g(x);
