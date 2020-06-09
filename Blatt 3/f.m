@@ -15,7 +15,7 @@ function y = f(x, index)
 end
 
 function y = f_1(x)
-    sin(5*x) + 0.5i*cos(x);
+    y = sin(5*x) + 0.5i*cos(x);
 end
 
 function y = f_2(x)
