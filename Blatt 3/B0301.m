@@ -3,13 +3,16 @@ function B0301()
         for s=1:5
             n = 2^s;
             y = zeros(n,1);
+            x = zeros(n,1);
             for i=0:n-1
-                y(i+1) = f(2*pi*i/n, r)
+                x(i+1) = 2*pi*i/n;
+                y(i+1) = f(x(i+1), r);
             end
             b = my_fft(y)
             b_ = fft(y)
             plot_f(r);
             hold on;
+            plot(x,y, "ob");
             plot_fourier(b);
             pause;
             hold off;
