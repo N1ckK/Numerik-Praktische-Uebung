@@ -1,5 +1,11 @@
-function my_fft()
-    
+function b = my_fft(y)
+    n = length(y);
+    s = log2(n);
+    if (s<>floor(s))
+        disp("my_fft() only support vectors with length n=2^s for some natural s.");
+        return;
+    end
+    b = 1/n * conj(my_ifft(conj(y)));
 end
 
 % n = 2^s is the size of T and b(eta)
@@ -7,7 +13,8 @@ function y = my_ifft(b, s)
     n = 2^s;
     T = calc_T(s);
     if (s == 0)
-        return T*b;
+        y = T*b;
+        return;
     end
     s_new = s - 1;
     n_new = 2^s_new;
@@ -27,7 +34,8 @@ function y = my_ifft(b, s)
     res_2 = D*my_ifft(b_even, s_new);
     y_1 = res_1 + res_2;
     y_2 = res_1 - res_2;
-    return [y_1; y_2];
+    y = [y_1; y_2];
+    return;
 end
 
 function T = calc_T(s)
