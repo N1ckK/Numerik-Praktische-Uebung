@@ -11,7 +11,7 @@ end
 % n = 2^s is the size of T and b(eta)
 function y = my_ifft(b, s)
     n = 2^s;
-    T = calc_T(s);
+    T = calc_T(s); 
     if (s == 0)
         y = T*b;
         return;
@@ -27,8 +27,9 @@ function y = my_ifft(b, s)
         b_odd(i) = b(2*i - 1);
     end
     D = zeros(n_new);
-    for i=1:n_new
-        D(i, i) = T(i, i);
+    for l=0:n_new-1
+        exponent = 1i*2*pi*l/n;
+        D(l+1, l+1) = exp(exponent);
     end
     res_1 = my_ifft(b_odd, s_new);
     res_2 = D*my_ifft(b_even, s_new);
@@ -40,12 +41,15 @@ end
 
 function T = calc_T(s)
     n = 2^s;
-    x = linspace(0,2*pi, n);
+    x = zeros(n,1);
+    for i=0:n-1
+        x(i+1) = 2*pi*i/n;
+    end
     T = zeros(n);
-    for k=1:n
+    for k=0:n-1
         for l=1:n
             exponent = 1i*k*x(l);
-            T(l, k) = exp(exponent);
+            T(l, k+1) = exp(exponent);
         end
     end
 end
