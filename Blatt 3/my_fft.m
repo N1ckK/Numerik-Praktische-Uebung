@@ -1,11 +1,11 @@
 function b = my_fft(y)
     n = length(y);
     s = log2(n);
-    if (s<>floor(s))
+    if (s ~= floor(s))
         disp("my_fft() only support vectors with length n=2^s for some natural s.");
         return;
     end
-    b = 1/n * conj(my_ifft(conj(y)));
+    b = 1/n * conj(my_ifft(conj(y), s));
 end
 
 % n = 2^s is the size of T and b(eta)
@@ -45,7 +45,7 @@ function T = calc_T(s)
     for k=1:n
         for l=1:n
             exponent = 1i*k*x(l);
-            A(l, k) = exp(exponent);
+            T(l, k) = exp(exponent);
         end
     end
 end
