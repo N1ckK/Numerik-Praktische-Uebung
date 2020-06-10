@@ -1,0 +1,10 @@
+Numerik II Praktikum - Blatt 03
+===============================
+
+Aufgabe 01 (Projekt 06):
+-----------------------
+Die Berechnung der Fouriertransformation und die grafische Darstellung zeigt, dass sehr viele Stützstellen nötig sind, um die Funktionen gut zu approximieren. Ansonsten oszillieren die trigonometrischen Interpolationspolynome stark. Es zeigt sich auch, dass große Amplitudensprünge tendenziell vermieden werden. Beispielsweise bei Funktion f_3 werden die Stützwerte im Bereich y = 1 nahe lokaler Maxima des trigonometrischen Polynoms getroffen, im Bereich y = -1 dagegen nahe der lokalen Mimima.
+
+
+Aufgabe 02 (Projekt 07):
+-----------------------
