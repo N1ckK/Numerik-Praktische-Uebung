@@ -8,3 +8,5 @@ Die Berechnung der Fouriertransformation und die grafische Darstellung zeigt, da
 
 Aufgabe 02 (Projekt 07):
 -----------------------
+
+Bei Verwendung der Delta-Koeffizienten ist ein geringerer Fehler zu beobachten.
