@@ -88,7 +88,7 @@ function plot_fourier(i, n, c)
     plot(supp, arrayfun(@(z) real(f(z, i)), supp), "ob");
 
     xlim([0 2*pi]);
-    title("real part")
+    title(['real part, n=', num2str(n), ', coeffs=', c]);
     hold off
     
     % --- plot imag part
@@ -99,7 +99,7 @@ function plot_fourier(i, n, c)
     plot(supp, arrayfun(@(z) imag(f(z, i)), supp), "ob");
 
     xlim([0 2*pi]);
-    title("imag part")
+    title(['imag part, n=', num2str(n), ', coeffs=', c]);
     hold off
     
     % plot spectrum
